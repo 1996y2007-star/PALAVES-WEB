@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>Santiago Palavés - Fotógrafo de Bodas y 15 Años en Uruguay</title>
+    <meta name="description" content="Fotografía profesional de bodas y eventos sociales en Uruguay. Capturo momentos únicos con calidad y toque humano. Cobertura en Uruguay y el mundo." />
+    <meta name="keywords" content="fotografía de bodas Uruguay, fotógrafo 15 años, fotografía social profesional, bodas Uruguay, quinceañeras, Santiago Palavés" />
+    <meta name="author" content="Santiago Palavés" />
+    <meta name="creator" content="Santiago Palavés" />
+    <meta name="publisher" content="Impulsa tu Marca" />
+    <link rel="canonical" href="https://santipalavesfotografia.com" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_UY" />
+    <meta property="og:url" content="https://santipalavesfotografia.com" />
+    <meta property="og:title" content="Santiago Palavés - Fotógrafo de Bodas y 15 Años" />
+    <meta property="og:description" content="Fotografía profesional de bodas y eventos. Momentos únicos, para siempre." />
+    <meta property="og:site_name" content="Santiago Palavés Fotografía" />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Santiago Palavés Fotografía" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Santiago Palavés - Fotógrafo de Bodas y 15 Años" />
+    <meta name="twitter:description" content="Fotografía profesional de bodas y eventos. Momentos únicos, para siempre." />
+    <meta name="twitter:image" content="/og-image.jpg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: '#faf8f5',
+                100: '#f5f1ea',
+                200: '#ebe4d6',
+                300: '#ddd2be',
+                400: '#c9b89d',
+                500: '#b5a389',
+                600: '#9d8a70',
+                700: '#7d6e5a',
+                800: '#5f5445',
+                900: '#433c32',
+              },
+              accent: {
+                light: '#f5f1ea',
+                DEFAULT: '#c9b89d',
+                dark: '#9d8a70',
+              },
+              warm: {
+                white: '#fafaf9',
+                gray: {
+                  50: '#f9f9f8',
+                  100: '#f3f3f1',
+                  200: '#e8e7e4',
+                  300: '#d3d2cd',
+                  400: '#a8a79f',
+                  500: '#77766e',
+                  600: '#5c5b54',
+                  700: '#47463f',
+                  800: '#35342f',
+                  900: '#252521',
+                }
+              }
+            },
+            fontFamily: {
+              serif: ['Playfair Display', 'Georgia', 'serif'],
+              sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            },
+            fontSize: {
+              'display-xl': ['4.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
+              'display-lg': ['3.75rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
+              'display-md': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.01em', fontWeight: '600' }],
+              'display-sm': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '600' }],
+            },
+            spacing: {
+              '18': '4.5rem',
+              '22': '5.5rem',
+              '26': '6.5rem',
+              '30': '7.5rem',
+            },
+            maxWidth: {
+              '8xl': '90rem',
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.8s ease-in-out',
+              'fade-in-up': 'fadeInUp 0.8s ease-out',
+              'fade-in-down': 'fadeInDown 0.8s ease-out',
+              'slide-in-left': 'slideInLeft 0.6s ease-out',
+              'slide-in-right': 'slideInRight 0.6s ease-out',
+              'scale-in': 'scaleIn 0.5s ease-out',
+            },
+            keyframes: {
+              fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+              fadeInDown: { '0%': { opacity: '0', transform: 'translateY(-30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+              slideInLeft: { '0%': { opacity: '0', transform: 'translateX(-50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+              slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+              scaleIn: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+            },
+            backgroundImage: {
+              'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+              'gradient-warm': 'linear-gradient(135deg, #faf8f5 0%, #ebe4d6 100%)',
+            },
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      /* Variables CSS personalizadas */
+      :root {
+        --color-primary: #b5a389;
+        --color-accent: #c9b89d;
+        --color-warm-white: #fafaf9;
+        --spacing-section: 6rem;
+        --spacing-section-mobile: 4rem;
+      }
+
+      /* Reset y estilos base */
+      @layer base {
+        * {
+          @apply border-warm-gray-200;
+        }
+
+        html {
+          @apply scroll-smooth;
+        }
+
+        body {
+          @apply font-sans text-base text-warm-gray-900;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+          @apply font-serif;
+        }
+
+        h1 {
+          @apply text-display-md md:text-display-lg text-warm-gray-900;
+        }
+
+        h2 {
+          @apply text-display-sm md:text-display-md text-warm-gray-900;
+        }
+
+        h3 {
+          @apply text-3xl md:text-4xl text-warm-gray-900;
+        }
+
+        p {
+          @apply text-base md:text-lg leading-relaxed text-warm-gray-700;
+        }
+
+        /* Selection color personalizado */
+        ::selection {
+          @apply bg-accent/30 text-warm-gray-900;
+        }
+      }
+
+      /* Componentes reutilizables */
+      @layer components {
+        /* Contenedor principal */
+        .container-custom {
+          @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+        }
+
+        /* Sección con padding vertical */
+        .section-padding {
+          @apply py-16 md:py-24 lg:py-32;
+        }
+
+        /* Botón primario */
+        .btn-primary {
+          @apply inline-flex items-center justify-center px-6 py-3 rounded-md
+                bg-accent hover:bg-accent-dark text-warm-gray-900 font-medium
+                transition-all duration-300 ease-in-out
+                hover:scale-105 hover:shadow-lg
+                focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+        }
+
+        /* Botón secundario */
+        .btn-secondary {
+          @apply inline-flex items-center justify-center px-6 py-3 rounded-md
+                bg-transparent border-2 border-accent text-accent
+                hover:bg-accent hover:text-warm-gray-900 font-medium
+                transition-all duration-300 ease-in-out
+                focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+        }
+        
+        /* Título de sección centrado */
+        .section-title {
+          @apply text-center mb-12 md:mb-16;
+        }
+
+        .section-title h2 {
+          @apply text-display-sm md:text-display-md mb-4 text-warm-gray-900;
+        }
+
+        .section-title p {
+          @apply text-lg md:text-xl text-warm-gray-600 max-w-2xl mx-auto;
+        }
+
+        /* Card con hover effect */
+        .card-hover {
+          @apply transition-all duration-300 ease-in-out
+                hover:scale-105 hover:shadow-xl;
+        }
+
+        /* Gradiente de fondo cálido */
+        .bg-warm-gradient {
+          @apply bg-gradient-to-br from-primary-50 via-warm-white to-primary-100;
+        }
+
+        /* Fallback: Masonry CSS */
+        .testimonials-masonry {
+          column-count: 1;
+          column-gap: 1.5rem;
+        }
+        @media (min-width: 768px) { .testimonials-masonry { column-count: 2; } }
+        @media (min-width: 1024px) { .testimonials-masonry { column-count: 3; } }
+        .testimonial-item { 
+          break-inside: avoid; 
+          margin-bottom: 1.5rem; 
+        }
+      }
+
+      /* Utilidades personalizadas */
+      @layer utilities {
+        /* Texto con gradiente */
+        .text-gradient {
+          @apply bg-gradient-to-r from-primary-600 to-accent bg-clip-text text-transparent;
+        }
+
+        /* Blur backdrop para overlays */
+        .backdrop-blur-custom {
+          backdrop-filter: blur(12px) saturate(180%);
+          -webkit-backdrop-filter: blur(12px) saturate(180%);
+        }
+
+        /* Aspecto ratio personalizado */
+        .aspect-photo {
+          aspect-ratio: 3 / 2;
+        }
+
+        .aspect-portrait {
+          aspect-ratio: 2 / 3;
+        }
+
+        .aspect-square {
+          aspect-ratio: 1 / 1;
+        }
+        
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      /* Animaciones personalizadas para Framer Motion */
+      .animate-in {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      /* Loading spinner custom */
+      .spinner {
+        border: 3px solid rgba(181, 163, 137, 0.2);
+        border-top-color: var(--color-accent);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 0.8s linear infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* Scrollbar personalizada (opcional) */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        @apply bg-warm-gray-100;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        @apply bg-accent rounded-full;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        @apply bg-accent-dark;
+      }
+
+      /* Native CSS Masonry Layout */
+      .masonry-grid {
+        column-gap: 1.5rem;
+        column-count: 3;
+      }
+      .masonry-grid > * {
+          break-inside: avoid;
+          page-break-inside: avoid; /* Legacy fallback */
+      }
+      @media (max-width: 1100px) {
+          .masonry-grid {
+              column-count: 2;
+          }
+      }
+      @media (max-width: 700px) {
+          .masonry-grid {
+              column-gap: 1rem;
+              column-count: 1;
+          }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "tailwind-merge": "https://aistudiocdn.com/tailwind-merge@^3.4.0",
+    "clsx": "https://aistudiocdn.com/clsx@^2.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^11.3.11",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.416.0",
+    "zod": "https://aistudiocdn.com/zod@^3.23.8"
+  }
+}
+</script>
+</head>
+  <body class="antialiased bg-warm-white text-warm-gray-900 font-sans">
+    <div id="root"></div>
+  </body>
+</html>
