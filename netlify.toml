@@ -1,11 +1,22 @@
-# Netlify Build Settings
-# Especifica el comando para construir el sitio y el directorio a publicar.
+# NETLIFY.TOML - SOLUCIÓN DEFINITIVA 2024/2025
+# Esta configuración usa la sintaxis moderna de Netlify
+
 [build]
   command = "npm run build"
   publish = "dist"
 
-# Netlify Redirects
-# Maneja las rutas para el panel de administración y la aplicación de página única (SPA).
+# IMPORTANTE: Deshabilitar los headers automáticos de Netlify
+[build.environment]
+  NETLIFY_SKIP_HEADERS = "true"
+
+# Headers que SÍ queremos (sin CSP restrictivo)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+
+# Redirects
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
@@ -15,11 +26,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-# Netlify Headers
-# Define una Política de Seguridad de Contenido (CSP) para todo el sitio.
-# Esto permite que los scripts de Framer Motion, Netlify CMS, POWR y Trustmary se ejecuten correctamente.
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Content-Security-Policy = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;"
