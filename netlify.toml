@@ -1,19 +1,56 @@
+# Netlify Configuration - CORREGIDO para errores de CSS
+
 [build]
   command = "npm run build"
   publish = "dist"
 
+# Headers optimizados para React + Vite + Tailwind
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: http:; font-src 'self' data:; connect-src 'self' https:; frame-src 'self' https://imgur.com; worker-src 'self' blob:;"
+    # CSP con soporte completo para Tailwind CSS y React
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; img-src 'self' data: https: http: blob:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: wss: http:; frame-src 'self' https://imgur.com https://www.youtube.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
+    
+    # Security headers
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
+# Headers específicos para archivos CSS
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline';"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers específicos para archivos JS
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval';"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers para HTML (no cachear)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Headers para el admin de Netlify CMS
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:;"
+
+# Redirect para Netlify CMS
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
 
+# SPA fallback - DEBE SER EL ÚLTIMO
 [[redirects]]
   from = "/*"
   to = "/index.html"
