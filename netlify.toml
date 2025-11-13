@@ -1,7 +1,11 @@
+# Netlify Build Settings
+# Especifica el comando para construir el sitio y el directorio a publicar.
 [build]
   command = "npm run build"
   publish = "dist"
 
+# Netlify Redirects
+# Maneja las rutas para el panel de administración y la aplicación de página única (SPA).
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
@@ -11,3 +15,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Netlify Headers
+# Define una Política de Seguridad de Contenido (CSP) para todo el sitio.
+# Esto permite que los scripts de Framer Motion, Netlify CMS, POWR y Trustmary se ejecuten correctamente.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;"
