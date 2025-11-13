@@ -1,0 +1,101 @@
+{
+  "title": "Bodas",
+  "photos": [
+    {
+      "id": "boda-1",
+      "src": "https://i.imgur.com/EHurHR9.jpg",
+      "alt": "Fotografía romántica en blanco y negro de novio y novia abrazados en una calle de Montevideo de noche. Retrato íntimo que captura la elegancia y el amor en una boda urbana en Uruguay.",
+      "title": "Amor bajo las luces",
+      "category": "Retrato Nocturno",
+      "location": "Montevideo"
+    },
+    {
+      "id": "boda-2",
+      "src": "https://i.imgur.com/hrUwCKW.jpg",
+      "alt": "Fotografía profesional de una pareja de novios caminando de la mano en una playa de Uruguay al atardecer. Escena romántica que captura la serenidad y conexión en una boda costera.",
+      "title": "Paseo al Ocaso",
+      "category": "Sesión Exterior",
+      "location": "Playa, Uruguay"
+    },
+    {
+      "id": "boda-3",
+      "src": "https://i.imgur.com/RQevI79.jpg",
+      "alt": "Beso apasionado de novios bajo luces cálidas en una noche estrellada en Uruguay. Fotografía emotiva que resalta la intimidad y el romance de la celebración de una boda.",
+      "title": "Bajo un Manto de Estrellas",
+      "category": "Retrato Nocturno",
+      "location": "Jardín de eventos, Uruguay"
+    },
+    {
+      "id": "boda-4",
+      "src": "https://i.imgur.com/EnfFDeA.jpg",
+      "alt": "Detalle artístico de invitaciones de boda personalizadas con acuarelas, mostrando el cuidado y la creatividad en los preparativos de un matrimonio en Uruguay.",
+      "title": "El Comienzo de la Historia",
+      "category": "Detalles",
+      "location": "Uruguay"
+    },
+    {
+      "id": "boda-5",
+      "src": "https://i.imgur.com/dOceZ5S.jpg",
+      "alt": "Momento divertido y enérgico en una fiesta de boda en Uruguay, donde los amigos levantan al novio junto a la piscina. Fotografía que captura la alegría y la camaradería.",
+      "title": "Celebración Inolvidable",
+      "category": "Fiesta",
+      "location": "Quinta, Uruguay"
+    },
+    {
+      "id": "boda-6",
+      "src": "https://i.imgur.com/6Pczz75.jpg",
+      "alt": "Fotografía espontánea en blanco y negro de novios y amigos tomando selfies con flashes en una vibrante fiesta de boda en Montevideo. Captura de la diversión y la energía.",
+      "title": "Flashes de Alegría",
+      "category": "Fiesta",
+      "location": "Montevideo"
+    },
+    {
+      "id": "boda-7",
+      "src": "https://i.imgur.com/LH2yF5c.jpg",
+      "alt": "Reacción emotiva y sorpresiva de los invitados durante el intercambio de anillos en una ceremonia de boda en Uruguay. Fotoperiodismo que captura la emoción genuina del momento.",
+      "title": "La Sorpresa del 'Sí'",
+      "category": "Ceremonia",
+      "location": "Uruguay"
+    },
+    {
+      "id": "boda-8",
+      "src": "https://i.imgur.com/FhF7Bnz.jpg",
+      "alt": "Retrato romántico de novios tomados de la mano en un muelle iluminado por la noche en Uruguay. Escena mágica que refleja la tranquilidad y el amor después de la ceremonia.",
+      "title": "Caminando sobre el Agua",
+      "category": "Retrato Nocturno",
+      "location": "Muelle, Uruguay"
+    },
+    {
+      "id": "boda-9",
+      "src": "https://i.imgur.com/yCeDYEw.jpg",
+      "alt": "Momento emotivo durante la recepción de una boda en Montevideo, donde el novio da un discurso mientras la novia lo mira. Fotografía que captura la emoción de las palabras.",
+      "title": "Palabras del Corazón",
+      "category": "Recepción",
+      "location": "Montevideo"
+    },
+    {
+      "id": "boda-10",
+      "src": "https://i.imgur.com/lwPZWOz.jpg",
+      "alt": "Fotografía de pareja de novios abrazados en las dunas de una playa uruguaya al atardecer. La luz dorada y el paisaje natural crean una atmósfera íntima y romántica.",
+      "title": "Atardecer en las Dunas",
+      "category": "Sesión Exterior",
+      "location": "Costa de Uruguay"
+    },
+    {
+      "id": "boda-11",
+      "src": "https://i.imgur.com/dfQfXRH.jpg",
+      "alt": "Momento íntimo del intercambio de votos de una pareja durante su ceremonia de boda en una rústica iglesia de piedra en Uruguay. Fotografía que captura la solemnidad y felicidad.",
+      "title": "El 'Sí' Sagrado",
+      "category": "Ceremonia",
+      "location": "Iglesia, Uruguay"
+    },
+    {
+      "id": "boda-12",
+      "src": "https://i.imgur.com/aDX5vI3.jpg",
+      "alt": "Vista amplia de una ceremonia de boda en una capilla histórica de Uruguay con murales artísticos. Novios en el altar, capturando la grandeza y la belleza del momento.",
+      "title": "Un Voto ante la Historia",
+      "category": "Ceremonia",
+      "location": "Capilla, Uruguay"
+    }
+  ]
+}

@@ -1,46 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, MessageCircle } from './icons.tsx';
+import { useCMSContent } from '../hooks/useCMSContent.ts';
+import type { HeroData, SettingsData } from '../types/cms.ts';
 
-// Array of new images for the hero slideshow, now with 5 images and enhanced SEO descriptions.
-const heroImages = [
-  // Fondo 1: Ceremonia eclesiástica - SEO para 'bodas en iglesia Uruguay'
-  {
-    src: 'https://i.imgur.com/4vD7L3s.jpg',
-    alt: 'Fotografía de ceremonia de boda íntima en una iglesia histórica de Uruguay, con la novia de espaldas luciendo un vestido blanco y el novio a su lado frente a un altar con murales artísticos.',
-    category: 'boda',
-  },
-  // Fondo 2: Retrato en dunas - SEO para 'bodas en la playa Uruguay'
-  {
-    src: 'https://i.imgur.com/qAXcd9g.jpg',
-    alt: 'Retrato romántico de una pareja de novios en las dunas de una playa uruguaya al atardecer. La luz dorada del sol poniente ilumina la escena, creando una atmósfera cinematográfica para una boda costera.',
-    category: 'boda',
-  },
-  // Fondo 3: Reflexión costera - SEO para 'sesión de fotos de novia'
-  {
-    src: 'https://i.imgur.com/vlnaCOG.jpg',
-    alt: 'Fotografía serena de una novia sentada de espaldas sobre rocas junto al mar al atardecer en Uruguay. El vestido blanco contrasta con el cielo anaranjado y el océano, evocando reflexión y paz.',
-    category: 'boda',
-  },
-  // Fondo 4: Celebración alegre - SEO para 'fiesta de boda Uruguay'
-  {
-    src: 'https://i.imgur.com/FzovMia.jpg',
-    alt: 'Momento festivo y alegre en una boda nocturna en Uruguay, donde la novia es levantada en brazos con una gran sonrisa. Fotografía que captura la celebración y la felicidad de los recién casados.',
-    category: 'boda',
-  },
-  // Fondo 5: Retrato ecuestre - SEO para 'sesión de fotos de quinceañera'
-  {
-    src: 'https://i.imgur.com/QoOi44b.jpg',
-    alt: 'Retrato ecuestre de una mujer montando a caballo en un campo uruguayo durante el atardecer. La luz dorada crea una atmósfera aventurera y serena, ideal para una sesión de fotos de quinceañera.',
-    category: 'quinceanera',
-  },
-];
+// Fallback data in case CMS content fails to load
+const fallbackHeroData: HeroData = {
+  title: "Momentos únicos, <span class='block mt-2 text-primary-200'>para siempre</span>",
+  subtitle: "Fotografía de bodas y eventos sociales",
+  slides: [
+    {
+      src: 'https://i.imgur.com/4vD7L3s.jpg',
+      alt: 'Fotografía de ceremonia de boda íntima en una iglesia histórica de Uruguay.',
+      category: 'boda',
+    },
+    {
+      src: 'https://i.imgur.com/qAXcd9g.jpg',
+      alt: 'Retrato romántico de una pareja de novios en las dunas de una playa uruguaya al atardecer.',
+      category: 'boda',
+    },
+  ]
+};
+
+const fallbackSettingsData: SettingsData = {
+  photographerName: "Santiago Palavés",
+  phone: "59899123456",
+  email: "",
+  instagram: "",
+  location: ""
+};
 
 // Function for smooth scroll to a section
 const scrollToSection = (id: string) => {
   const section = document.getElementById(id);
   if (section) {
-    // A slight offset to account for the sticky header
     const headerOffset = 100;
     const elementPosition = section.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -50,14 +43,6 @@ const scrollToSection = (id: string) => {
          behavior: "smooth"
     });
   }
-};
-
-
-// Function to open WhatsApp
-const handleWhatsAppClick = () => {
-  const phoneNumber = '59899123456'; // Example: Uruguay code + 9-digit number
-  const message = encodeURIComponent('Hola Santiago! Me interesa conocer más sobre tus servicios de fotografía.');
-  window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
 };
 
 // Reusable variants for animations
@@ -81,20 +66,38 @@ export default function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const heroData = useCMSContent<HeroData>('hero.json', fallbackHeroData);
+  const settingsData = useCMSContent<SettingsData>('settings.json', fallbackSettingsData);
+
+  const content = heroData || fallbackHeroData;
+  const settings = settingsData || fallbackSettingsData;
+  const heroImages = content.slides;
+
+  // Function to open WhatsApp
+  const handleWhatsAppClick = () => {
+    const phoneNumber = settings.phone.replace(/[^0-9]/g, '');
+    const message = encodeURIComponent(`Hola ${settings.photographerName}! Me interesa conocer más sobre tus servicios de fotografía.`);
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
+  };
+
   // Automatic image change every 5 seconds
   useEffect(() => {
+    if (heroImages.length === 0) return;
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
-        prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
+        (prevIndex + 1) % heroImages.length
       );
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [heroImages.length]);
 
-  // Mark as loaded after the first render
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  if (!heroImages || heroImages.length === 0) {
+    return <section id="inicio" className="relative h-screen w-full flex items-center justify-center bg-warm-gray-100">Cargando...</section>;
+  }
 
   return (
     <section id="inicio" className="relative h-screen w-full overflow-hidden">
@@ -130,7 +133,6 @@ export default function Hero() {
             />
           </motion.div>
         </AnimatePresence>
-        {/* Dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-10" />
       </div>
 
@@ -147,16 +149,15 @@ export default function Hero() {
             <motion.h1
               variants={childVariants}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight"
+              dangerouslySetInnerHTML={{ __html: content.title }}
             >
-              Momentos únicos,{' '}
-              <span className="block mt-2 text-primary-200">para siempre</span>
             </motion.h1>
             
             <motion.p
               variants={childVariants}
               className="text-lg sm:text-xl md:text-2xl text-warm-gray-100 max-w-2xl mx-auto font-light"
             >
-              Fotografía de bodas y eventos sociales
+              {content.subtitle}
             </motion.p>
             
             <motion.div
@@ -192,7 +193,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Animated Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : -20 }}
@@ -214,7 +214,6 @@ export default function Hero() {
         </button>
       </motion.div>
 
-      {/* Slideshow Indicators (Dots) */}
       <div className="absolute bottom-8 right-8 z-20 flex gap-2">
         {heroImages.map((_, index) => (
           <button
@@ -232,24 +231,3 @@ export default function Hero() {
     </section>
   );
 }
-
-/*
- * =================================================================
- * Instrucciones de Integración
- * =================================================================
- *
- * 1. REEMPLAZO DEL COMPONENTE:
- *    - Este código reemplaza completamente el contenido de `components/Hero.tsx`.
- *    - El componente ya está importado en `App.tsx`, por lo que no se necesitan más cambios de integración.
- *
- * 2. PRUEBAS:
- *    - Reinicia tu servidor de desarrollo (`npm run dev` o similar) para ver los cambios.
- *    - Verifica que el slideshow de fondos rote automáticamente cada 5 segundos entre las 5 nuevas imágenes y que las transiciones sean suaves.
- *    - Prueba el diseño responsive en modo de dispositivo móvil para asegurar que las imágenes se recorten correctamente y el texto sea legible.
- *
- * 3. MIGRACIÓN A CDN (Recomendado para producción):
- *    - Aunque Imgur es útil, para un rendimiento óptimo y control total, considera migrar las imágenes a un CDN como Cloudinary, Vercel Blob o AWS S3.
- *    - Esto te permitirá optimizar las imágenes sobre la marcha (ej., convirtiéndolas a formato WebP) y mejorar la velocidad de carga global.
- *    - Ejemplo de URL en Cloudinary: `src: "https://res.cloudinary.com/tu-cuenta/image/upload/v123/hero-1.webp"`
- *
- */

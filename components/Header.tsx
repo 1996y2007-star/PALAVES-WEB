@@ -3,11 +3,24 @@ import { motion } from 'framer-motion';
 import { Menu, X } from './icons.tsx';
 import MobileMenu from './MobileMenu.tsx';
 import { navigationLinks } from '../lib/navigationData.ts';
+import { useCMSContent } from '../hooks/useCMSContent.ts';
+import type { SettingsData } from '../types/cms.ts';
+
+const fallbackSettings: SettingsData = {
+    photographerName: 'Santiago Palavés',
+    phone: '',
+    email: '',
+    instagram: '',
+    location: '',
+};
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('inicio');
+  
+  const settingsData = useCMSContent<SettingsData>('settings.json', fallbackSettings);
+  const settings = settingsData || fallbackSettings;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +80,7 @@ export default function Header() {
             >
               <div className="relative">
                 <span className={`text-2xl md:text-3xl font-serif font-bold transition-colors ${isScrolled ? 'text-warm-gray-900' : 'text-white'}`}>
-                  Santiago Palavés
+                  {settings.photographerName}
                 </span>
                 <span className={`block text-xs md:text-sm font-light transition-colors ${isScrolled ? 'text-warm-gray-600' : 'text-white/90'}`}>
                   Fotografía

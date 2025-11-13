@@ -1,0 +1,58 @@
+{
+  "title": "Cómo Trabajo",
+  "subtitle": "Desde el primer contacto hasta la entrega final, cada paso está pensado para tu tranquilidad.",
+  "steps": [
+    {
+      "number": "01",
+      "title": "Contacto Inicial",
+      "description": "Me contás sobre tu evento y te envío una propuesta personalizada con todos los detalles y precios.",
+      "icon": "MessageCircle"
+    },
+    {
+      "number": "02",
+      "title": "Reunión Personal",
+      "description": "Nos conocemos, hablamos de tus expectativas y afinamos cada detalle de la cobertura.",
+      "icon": "Users"
+    },
+    {
+      "number": "03",
+      "title": "El Gran Día",
+      "description": "Capturo cada momento, siempre presente y atento a cada detalle para que nada se pierda.",
+      "icon": "Camera"
+    },
+    {
+      "number": "04",
+      "title": "Edición y Entrega",
+      "description": "Elaboro y edito tus fotos con cuidado profesional para que las disfrutes para siempre.",
+      "icon": "Sparkles"
+    }
+  ],
+  "timeline": {
+    "duration": "3-4",
+    "label": "Semanas para la entrega final"
+  },
+  "behindTheScenes": {
+    "enabled": true,
+    "title": "Un Vistazo al Proceso",
+    "description": "Así trabajo detrás de escena para crear tus recuerdos.",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Editando fotografías en un monitor profesional con una tableta gráfica."
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Equipo fotográfico profesional, incluyendo cámaras y lentes, preparado para un evento."
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1606805720935-39703c983a0a?q=80&w=1200&auto=format&fit=crop",
+        "alt": "Fotógrafo en acción durante una boda, capturando un momento especial de la pareja."
+      }
+    ]
+  },
+  "cta": {
+    "title": "¿Listo para empezar?",
+    "description": "El primer paso es simple: hablemos de tu evento.",
+    "buttonText": "Iniciar Conversación"
+  }
+}

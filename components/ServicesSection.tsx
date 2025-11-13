@@ -1,8 +1,11 @@
 // components/ServicesSection.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { servicesData, servicesInfo } from '../lib/servicesData.ts';
 import { Check, ArrowRight } from 'lucide-react';
+import { useCMSContent } from '../hooks/useCMSContent.ts';
+import type { ServicesData, Service } from '../types/cms.ts';
+// Import original data for fallback
+import { servicesData as fallbackServices, servicesInfo as fallbackInfo } from '../lib/servicesData.ts';
 
 // Helper function for smooth scrolling to the contact section
 const scrollToContact = () => {
@@ -10,7 +13,7 @@ const scrollToContact = () => {
 };
 
 interface ServiceCardProps {
-  service: typeof servicesData[0];
+  service: Service;
   index: number;
 }
 
@@ -58,7 +61,15 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index }) => {
   );
 };
 
+const fallbackData: ServicesData = {
+    ...fallbackInfo,
+    servicesList: fallbackServices
+};
+
 export default function ServicesSection() {
+  const cmsData = useCMSContent<ServicesData>('services.json', fallbackData);
+  const servicesInfo = cmsData || fallbackData;
+
   return (
     <section id="servicios" className="section-padding bg-warm-gradient">
       <div className="container-custom">
@@ -73,9 +84,8 @@ export default function ServicesSection() {
           <p>{servicesInfo.subtitle}</p>
         </motion.div>
 
-        {/* Responsive grid for service cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 max-w-5xl mx-auto">
-          {servicesData.map((service, index) => (
+          {servicesInfo.servicesList.map((service, index) => (
             <ServiceCard key={service.id} service={service} index={index} />
           ))}
         </div>
@@ -93,29 +103,3 @@ export default function ServicesSection() {
     </section>
   );
 }
-
-/*
- * =================================================================
- * Instrucciones de Integración
- * =================================================================
- *
- * 1. CREACIÓN DEL ARCHIVO:
- *    - Guarda este código como `components/ServicesSection.tsx`.
- *
- * 2. CREACIÓN DEL ARCHIVO DE DATOS:
- *    - Crea un nuevo archivo en `lib/servicesData.ts` y pega el contenido correspondiente proporcionado en el otro cambio.
- *
- * 3. IMPORTACIÓN EN App.tsx:
- *    - Abre `App.tsx` (o tu archivo de layout principal).
- *    - Importa el componente: `import ServicesSection from './components/ServicesSection.tsx';`
- *    - Añade `<ServicesSection />` en el lugar correcto, idealmente después de `<Portfolio />` y antes de `<ProcessSection />`.
- *
- * 4. ACTUALIZACIÓN DE NAVEGACIÓN:
- *    - Abre `lib/navigationData.ts` y añade el enlace a la nueva sección en el array `navigationLinks`.
- *
- * 5. PRUEBAS:
- *    - Inicia tu servidor de desarrollo (`npm run dev`).
- *    - Navega a la nueva sección "Servicios" y verifica que se renderiza correctamente.
- *    - Usa las herramientas de desarrollador (F12) para probar el diseño responsive en vistas de móvil y tablet.
- *    - Haz clic en los botones "Solicitar mi Presupuesto" para confirmar que el scroll suave a la sección de contacto funciona.
- */

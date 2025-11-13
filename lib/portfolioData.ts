@@ -2,9 +2,10 @@ export interface Photo {
   id: string;
   src: string;
   alt: string;
-  title?: string;
-  category?: string;
-  location?: string;
+  // Fix: Made title, category, and location required to align with PortfolioPhoto type.
+  title: string;
+  category: string;
+  location: string;
 }
 
 export const weddingPhotos: Photo[] = [

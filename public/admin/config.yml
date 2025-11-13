@@ -1,0 +1,203 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+locale: es
+
+collections:
+  # ============================================
+  # CONFIGURACIÓN GENERAL
+  # ============================================
+  - name: "settings"
+    label: "⚙️ Configuración General"
+    files:
+      - label: "Ajustes del Sitio"
+        name: "settings"
+        file: "public/content/settings.json"
+        fields:
+          - {label: "Nombre del Fotógrafo", name: "photographerName", widget: "string", default: "Santiago Palavés"}
+          - {label: "Teléfono WhatsApp", name: "phone", widget: "string", hint: "+598 XX XXX XXX"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Instagram (sin @)", name: "instagram", widget: "string"}
+          - {label: "Ubicación", name: "location", widget: "string", default: "Uruguay"}
+
+  # ============================================
+  # HERO / PORTADA
+  # ============================================
+  - name: "hero"
+    label: "🏠 Portada (Hero)"
+    files:
+      - label: "Hero"
+        name: "hero"
+        file: "public/content/hero.json"
+        fields:
+          - {label: "Título Principal", name: "title", widget: "string"}
+          - {label: "Subtítulo", name: "subtitle", widget: "string"}
+          - label: "🖼️ Imágenes del Slideshow"
+            name: "slides"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            fields:
+              - {label: "URL de Imgur", name: "src", widget: "string", hint: "Ej: https://i.imgur.com/abc123.jpg"}
+              - {label: "Descripción Alt (SEO)", name: "alt", widget: "text"}
+              - {label: "Categoría", name: "category", widget: "select", options: ["boda", "quinceanera"]}
+
+  # ============================================
+  # SOBRE MÍ
+  # ============================================
+  - name: "about"
+    label: "👤 Sobre Mí"
+    files:
+      - label: "Sobre Mí"
+        name: "about"
+        file: "public/content/about.json"
+        fields:
+          - {label: "Título", name: "title", widget: "string", default: "Sobre Mí"}
+          - {label: "Descripción Principal", name: "description", widget: "markdown"}
+          - {label: "URL Foto de Perfil (Imgur)", name: "profileImage", widget: "string"}
+          - {label: "Cita / Misión", name: "missionStatement", widget: "text"}
+
+  # ============================================
+  # SERVICIOS
+  # ============================================
+  - name: "services"
+    label: "💼 Servicios"
+    files:
+      - label: "Servicios"
+        name: "services"
+        file: "public/content/services.json"
+        fields:
+          - {label: "Título de la Sección", name: "title", widget: "string"}
+          - {label: "Subtítulo", name: "subtitle", widget: "text"}
+          - {label: "Nota al Pie", name: "footerNote", widget: "string", required: false}
+          - label: "Lista de Servicios"
+            name: "servicesList"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - {label: "ID", name: "id", widget: "string", hint: "Ej: bodas, quinceaneras"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "text"}
+              - label: "Imagen"
+                name: "image"
+                widget: "object"
+                fields:
+                  - {label: "URL de Imgur", name: "src", widget: "string"}
+                  - {label: "Alt", name: "alt", widget: "string"}
+              - label: "Beneficios"
+                name: "benefits"
+                widget: "list"
+                field: {label: "Beneficio", name: "benefit", widget: "string"}
+              - {label: "Texto del Botón CTA", name: "ctaText", widget: "string"}
+
+  # ============================================
+  # PROCESO
+  # ============================================
+  - name: "process"
+    label: "📋 Mi Proceso"
+    files:
+      - label: "Proceso"
+        name: "process"
+        file: "public/content/process.json"
+        fields:
+          - {label: "Título de la Sección", name: "title", widget: "string"}
+          - {label: "Subtítulo", name: "subtitle", widget: "text", required: false}
+          - label: "Pasos del Proceso"
+            name: "steps"
+            widget: "list"
+            summary: "Paso {{fields.number}}: {{fields.title}}"
+            fields:
+              - {label: "Número", name: "number", widget: "string"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "text"}
+              - {label: "Icono", name: "icon", widget: "select", options: ["MessageCircle", "Users", "Camera", "Sparkles"]}
+          - label: "Timeline"
+            name: "timeline"
+            widget: "object"
+            fields:
+              - {label: "Duración (ej: 3-4)", name: "duration", widget: "string"}
+              - {label: "Etiqueta", name: "label", widget: "string"}
+          - label: "Detrás de Escena"
+            name: "behindTheScenes"
+            widget: "object"
+            fields:
+                - {label: "Habilitado", name: "enabled", widget: "boolean", default: true}
+                - {label: "Título", name: "title", widget: "string"}
+                - {label: "Descripción", name: "description", widget: "string"}
+                - label: "Imágenes"
+                  name: "images"
+                  widget: "list"
+                  fields:
+                    - {label: "URL de Imgur", name: "src", widget: "string"}
+                    - {label: "Alt", name: "alt", widget: "string"}
+          - label: "CTA Final"
+            name: "cta"
+            widget: "object"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Descripción", name: "description", widget: "string"}
+              - {label: "Texto del Botón", name: "buttonText", widget: "string"}
+  # ============================================
+  # CONTACTO
+  # ============================================
+  - name: "contact"
+    label: "📞 Contacto"
+    files:
+      - label: "Información de Contacto"
+        name: "contact"
+        file: "public/content/contact.json"
+        fields:
+          - {label: "Título de la Sección", name: "title", widget: "string"}
+          - {label: "Descripción", name: "description", widget: "text"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Teléfono", name: "phone", widget: "string"}
+          - {label: "WhatsApp", name: "whatsapp", widget: "string", hint: "Número con código de país sin el +"}
+
+  # ============================================
+  # PORTFOLIO - BODAS
+  # ============================================
+  - name: "portfolio_bodas"
+    label: "💍 Portfolio - Bodas"
+    files:
+      - label: "Fotos de Bodas"
+        name: "bodas"
+        file: "public/content/portfolio/bodas.json"
+        fields:
+          - {label: "Título de la Sección", name: "title", widget: "string", default: "Bodas"}
+          - label: "📸 Galería de Fotos"
+            name: "photos"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - {label: "ID", name: "id", widget: "string", hint: "Ej: boda-1"}
+              - {label: "URL de Imgur", name: "src", widget: "string", hint: "https://i.imgur.com/abc123.jpg"}
+              - {label: "Descripción Alt (SEO)", name: "alt", widget: "text"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Categoría", name: "category", widget: "string", hint: "Ej: Retrato Nocturno"}
+              - {label: "Ubicación", name: "location", widget: "string"}
+
+  # ============================================
+  # PORTFOLIO - 15 AÑOS
+  # ============================================
+  - name: "portfolio_quince"
+    label: "🎉 Portfolio - 15 Años"
+    files:
+      - label: "Fotos de 15 Años"
+        name: "quince"
+        file: "public/content/portfolio/quince.json"
+        fields:
+          - {label: "Título de la Sección", name: "title", widget: "string", default: "15 Años"}
+          - label: "📸 Galería de Fotos"
+            name: "photos"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - {label: "ID", name: "id", widget: "string"}
+              - {label: "URL de Imgur", name: "src", widget: "string"}
+              - {label: "Descripción Alt (SEO)", name: "alt", widget: "text"}
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Categoría", name: "category", widget: "string"}
+              - {label: "Ubicación", name: "location", widget: "string"}

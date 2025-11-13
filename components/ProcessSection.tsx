@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion, useMotionValueEvent } from 'framer-motion';
 import { Clock, ArrowRight, MessageCircle, Users, Camera, Sparkles } from 'lucide-react';
-import { processSteps, processInfo, ProcessStep as ProcessStepType, BehindImage } from '../lib/processData.ts';
 import { useScrollProgress } from '../hooks/useScrollProgress.ts';
 import { useAnimatedCounter } from '../hooks/useAnimatedCounter.ts';
+import { useCMSContent } from '../hooks/useCMSContent.ts';
+import type { ProcessData, ProcessStep as ProcessStepType, ProcessBehindImage } from '../types/cms.ts';
+// Import original data for fallback and styling
+import { processInfo as fallbackProcessInfo, processSteps as fallbackSteps } from '../lib/processData.ts';
 
 const iconMap = {
   MessageCircle,
@@ -12,9 +15,9 @@ const iconMap = {
   Sparkles,
 };
 
-// ProcessStep Component
+// Augment step with color from original data for styling
 interface ProcessStepProps {
-  step: ProcessStepType;
+  step: ProcessStepType & { color: string };
   isActive: boolean;
 }
 
@@ -42,14 +45,11 @@ const ProcessStep: React.FC<ProcessStepProps> = ({ step, isActive }) => {
   );
 };
 
-// Behind the Scenes Image Component
-const BehindTheScenesImage: React.FC<{ image: BehindImage; index: number }> = ({ image, index }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
-
+const BehindTheScenesImage: React.FC<{ image: ProcessBehindImage; index: number }> = ({ image, index }) => {
     return (
         <motion.div
             className="relative aspect-photo overflow-hidden rounded-lg shadow-lg group"
-            style={{ transformStyle: 'preserve-3d' }}
+            style={{ transformStyle: 'preserve-d' }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -60,16 +60,8 @@ const BehindTheScenesImage: React.FC<{ image: BehindImage; index: number }> = ({
                 src={image.src}
                 alt={image.alt}
                 loading="lazy"
-                onLoad={() => setIsLoaded(true)}
                 className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-                style={{ opacity: isLoaded ? 1 : 0, transform: 'translateZ(20px) scale(1.05)' }}
-            />
-            <img 
-                src={image.blurDataURL}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-                style={{ opacity: isLoaded ? 0 : 1, filter: 'blur(10px)' }}
+                style={{ transform: 'translateZ(20px) scale(1.05)' }}
             />
             <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
             <p className="absolute bottom-4 left-4 text-white font-medium text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -80,11 +72,31 @@ const BehindTheScenesImage: React.FC<{ image: BehindImage; index: number }> = ({
     );
 };
 
+// Create fallback data from imported lib
+const fallbackData: ProcessData = {
+    title: fallbackProcessInfo.title,
+    subtitle: fallbackProcessInfo.subtitle,
+    steps: fallbackSteps.map(({id, color, ...rest}) => rest), // remove non-CMS fields
+    timeline: fallbackProcessInfo.timeline,
+    behindTheScenes: {
+        ...fallbackProcessInfo.behindTheScenes,
+        images: fallbackProcessInfo.behindTheScenes.images.map(({blurDataURL, ...rest}) => rest),
+    },
+    cta: fallbackProcessInfo.cta,
+};
 
-// Main ProcessSection Component
 export default function ProcessSection() {
   const { ref: timelineRef, scaleX } = useScrollProgress();
   const [activeStep, setActiveStep] = useState(0);
+
+  const cmsData = useCMSContent<ProcessData>('process.json', fallbackData);
+  const processInfo = cmsData || fallbackData;
+  
+  // Enrich CMS steps with original color data for styling
+  const processSteps = processInfo.steps.map((step, index) => ({
+      ...step,
+      color: fallbackSteps[index]?.color || 'from-accent-light to-accent',
+  }));
 
   useMotionValueEvent(scaleX, "change", (latest) => {
     const newStep = Math.min(Math.floor(latest * processSteps.length), processSteps.length - 1);
@@ -124,13 +136,12 @@ export default function ProcessSection() {
           />
           <div className="relative grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {processSteps.map((step, index) => (
-              <ProcessStep key={step.id} step={step} isActive={index === activeStep} />
+              <ProcessStep key={index} step={step} isActive={index === activeStep} />
             ))}
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-center mb-24 lg:mb-32">
-          {/* Delivery Time */}
           <motion.div 
             className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left"
             initial={{ opacity: 0, x: -50 }}
@@ -147,7 +158,6 @@ export default function ProcessSection() {
             <p className="text-lg text-warm-gray-600">{processInfo.timeline.label}</p>
           </motion.div>
 
-          {/* Behind the scenes */}
           {processInfo.behindTheScenes.enabled && (
             <motion.div 
               className="lg:col-span-2"
@@ -167,7 +177,6 @@ export default function ProcessSection() {
           )}
         </div>
 
-        {/* CTA */}
         <motion.div 
           className="bg-primary-500/10 border border-primary-200 rounded-xl p-8 md:p-12 text-center"
           initial={{ opacity: 0, scale: 0.95 }}

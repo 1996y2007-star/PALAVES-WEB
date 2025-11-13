@@ -1,0 +1,31 @@
+{
+  "title": "Momentos únicos, <span class='block mt-2 text-primary-200'>para siempre</span>",
+  "subtitle": "Fotografía de bodas y eventos sociales",
+  "slides": [
+    {
+      "src": "https://i.imgur.com/4vD7L3s.jpg",
+      "alt": "Fotografía de ceremonia de boda íntima en una iglesia histórica de Uruguay, con la novia de espaldas luciendo un vestido blanco y el novio a su lado frente a un altar con murales artísticos.",
+      "category": "boda"
+    },
+    {
+      "src": "https://i.imgur.com/qAXcd9g.jpg",
+      "alt": "Retrato romántico de una pareja de novios en las dunas de una playa uruguaya al atardecer. La luz dorada del sol poniente ilumina la escena, creando una atmósfera cinematográfica para una boda costera.",
+      "category": "boda"
+    },
+    {
+      "src": "https://i.imgur.com/vlnaCOG.jpg",
+      "alt": "Fotografía serena de una novia sentada de espaldas sobre rocas junto al mar al atardecer en Uruguay. El vestido blanco contrasta con el cielo anaranjado y el océano, evocando reflexión y paz.",
+      "category": "boda"
+    },
+    {
+      "src": "https://i.imgur.com/FzovMia.jpg",
+      "alt": "Momento festivo y alegre en una boda nocturna en Uruguay, donde la novia es levantada en brazos con una gran sonrisa. Fotografía que captura la celebración y la felicidad de los recién casados.",
+      "category": "boda"
+    },
+    {
+      "src": "https://i.imgur.com/QoOi44b.jpg",
+      "alt": "Retrato ecuestre de una mujer montando a caballo en un campo uruguayo durante el atardecer. La luz dorada crea una atmósfera aventurera y serena, ideal para una sesión de fotos de quinceañera.",
+      "category": "quinceanera"
+    }
+  ]
+}
