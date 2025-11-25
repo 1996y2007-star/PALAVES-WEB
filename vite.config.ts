@@ -4,14 +4,15 @@ import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  publicDir: 'public', // Define explícitamente el directorio público
   base: '/',
-  publicDir: 'public', // Asegura que la carpeta public se copie a la raíz de dist
   build: {
     outDir: 'dist',
+    assetsDir: 'assets',
+    copyPublicDir: true, // CRÍTICO: Fuerza la copia de archivos de public a dist (incluyendo admin/config.yml)
     target: 'esnext',
     sourcemap: false,
     minify: 'terser',
-    assetsInlineLimit: 0, // Evita inlinear archivos pequeños, fuerza copia de archivos
     terserOptions: {
       compress: {
         drop_console: true,

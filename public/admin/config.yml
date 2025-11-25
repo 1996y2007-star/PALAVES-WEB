@@ -2,10 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-# Carpeta donde se subirán las imágenes nuevas desde el CMS
-media_folder: "public/images/uploads"
-# Ruta pública con la que se accederá a esas imágenes en la web
-public_folder: "/images/uploads"
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
 locale: es
 
@@ -92,7 +90,8 @@ collections:
               - label: "Beneficios"
                 name: "benefits"
                 widget: "list"
-                field: {label: "Beneficio", name: "benefit", widget: "string"}
+                fields:
+                  - {label: "Beneficio", name: "benefit", widget: "string"}
               - {label: "Texto del Botón CTA", name: "ctaText", widget: "string"}
 
   # ============================================
