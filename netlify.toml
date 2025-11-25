@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+  # Fuerza servir config.yml como YAML
+  from = "/admin/config.yml"
+  to = "/admin/config.yml"
+  status = 200
+  force = true
+
+[[headers]]
+  - for = "/admin/config.yml"
+    [headers.values]
+      Content-Type = "text/yaml"
