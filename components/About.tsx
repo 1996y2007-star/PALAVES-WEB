@@ -1,4 +1,3 @@
-// Fix: Created the About component.
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Camera } from 'lucide-react';

@@ -5,9 +5,7 @@ export function useCMSContent<T>(filePath: string, fallback?: T): T | null {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Agregamos un timestamp para evitar cache agresivo en navegadores
-    // durante la edición, aunque en producción Vite gestiona los assets.
-    // Al usar fetch a /content/..., leemos el archivo servido estáticamente.
+    // Fetch al archivo JSON servido estáticamente en /content/
     fetch(`/content/${filePath}`)
       .then(res => {
         if (!res.ok) {
