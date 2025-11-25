@@ -1,70 +1,135 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { testimonialsInfo } from '../lib/testimonialsData.ts';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { testimonials, testimonialsInfo, Testimonial } from '../lib/testimonialsData.ts';
 import { useAnimatedCounter } from '../hooks/useAnimatedCounter.ts';
-import { ArrowRight } from 'lucide-react';
+import TestimonialCard from './TestimonialCard.tsx';
 
+// Componente interno para las estadísticas animadas
 const StatItem = ({ end, label }: { end: string; label: string }) => {
     const { ref, count } = useAnimatedCounter(end);
     return (
-        <div className="text-center">
-            <span ref={ref} className="text-4xl md:text-5xl font-serif font-bold text-accent">
+        <div className="text-center group hover:-translate-y-1 transition-transform duration-300">
+            <span ref={ref} className="text-4xl md:text-5xl font-serif font-bold text-accent block mb-2">
                 {count}
             </span>
-            <p className="text-sm text-warm-gray-600 mt-1">{label}</p>
+            <p className="text-sm font-medium text-warm-gray-600 tracking-wide uppercase">{label}</p>
         </div>
     );
 };
 
 export default function Testimonials() {
-    const [isWidgetLoading, setWidgetLoading] = useState(true);
-    const [widgetError, setWidgetError] = useState(false);
-    const widgetContainerRef = useRef<HTMLDivElement>(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+    
+    // Referencias para gestos táctiles
+    const touchStartX = useRef<number>(0);
+    const touchEndX = useRef<number>(0);
 
-    // Widget Trustmary nuevo con ID IDKFeBge- reemplaza cards - carga dinámica para SSR
+    const length = testimonials.length;
+
+    // Lógica de Autoplay
     useEffect(() => {
-        if (typeof window === 'undefined' || !widgetContainerRef.current) return;
+        if (isPaused) return;
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [isPaused, length]);
 
-        const scriptId = 'trustmary-widget-script-IDKFeBge-';
-        const scriptSrc = 'https://widget.trustmary.com/IDKFeBge-';
+    // Funciones de navegación
+    const goToNext = () => {
+        setCurrentIndex((prev) => (prev + 1) % length);
+    };
 
-        if (document.getElementById(scriptId)) {
-            setWidgetLoading(false);
-            return;
-        }
+    const goToPrevious = () => {
+        setCurrentIndex((prev) => (prev - 1 + length) % length);
+    };
 
-        const script = document.createElement('script');
-        script.id = scriptId;
-        script.src = scriptSrc;
-        script.async = true;
+    // Manejadores de Touch
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+        setIsPaused(true);
+    };
 
-        script.onload = () => {
-            setTimeout(() => setWidgetLoading(false), 500);
-        };
-        script.onerror = () => {
-            setWidgetLoading(false);
-            setWidgetError(true);
-            console.error('Error: Failed to load the Trustmary widget script.');
-        };
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        setIsPaused(false);
+        if (!touchStartX.current || !touchEndX.current) return;
         
-        widgetContainerRef.current.appendChild(script);
+        const diff = touchStartX.current - touchEndX.current;
+        // Umbral de 50px para considerar swipe
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) goToNext();
+            else goToPrevious();
+        }
+        
+        // Reset
+        touchStartX.current = 0;
+        touchEndX.current = 0;
+    };
 
-        return () => {
-            const existingScript = document.getElementById(scriptId);
-            if (existingScript) {
-                existingScript.remove();
-            }
-        };
-    }, []);
+    // Calcular posición relativa para efectos 3D
+    const getPosition = (index: number) => {
+        if (index === currentIndex) return 'center';
+        if (index === (currentIndex - 1 + length) % length) return 'left';
+        if (index === (currentIndex + 1) % length) return 'right';
+        return 'hidden';
+    };
+
+    // Variantes de animación 3D
+    const variants = {
+        center: {
+            x: '0%',
+            scale: 1,
+            zIndex: 20,
+            opacity: 1,
+            rotateY: 0,
+            filter: 'blur(0px)',
+            transition: { type: 'spring', stiffness: 300, damping: 30 }
+        },
+        left: {
+            x: '-60%', // Ajustado para responsive
+            scale: 0.85,
+            zIndex: 10,
+            opacity: 0.6,
+            rotateY: 35,
+            filter: 'blur(2px)',
+            transition: { type: 'spring', stiffness: 300, damping: 30 }
+        },
+        right: {
+            x: '60%', // Ajustado para responsive
+            scale: 0.85,
+            zIndex: 10,
+            opacity: 0.6,
+            rotateY: -35,
+            filter: 'blur(2px)',
+            transition: { type: 'spring', stiffness: 300, damping: 30 }
+        },
+        hidden: {
+            x: '0%',
+            scale: 0.5,
+            zIndex: 0,
+            opacity: 0,
+            rotateY: 0,
+            filter: 'blur(10px)',
+        }
+    };
 
     const scrollToContact = () => {
         document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
     };
 
+    // Filtramos solo los visibles para renderizar (optimización)
+    // Aunque mapeamos todos y Framer Motion maneja el "hidden" state
+    
     return (
-        <section id="testimonios" className="section-padding bg-warm-white overflow-hidden" aria-labelledby="testimonials-title">
+        <section id="testimonios" className="section-padding bg-warm-white overflow-hidden perspective-container">
             <div className="container-custom">
-                {/* Section Title */}
+                {/* Header */}
                 <motion.div
                     className="section-title"
                     initial={{ opacity: 0, y: 30 }}
@@ -72,84 +137,113 @@ export default function Testimonials() {
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h2 id="testimonials-title">{testimonialsInfo.title}</h2>
-                    <p>{testimonialsInfo.subtitle}</p>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl">{testimonialsInfo.title}</h2>
+                    <p className="mt-4">{testimonialsInfo.subtitle}</p>
                 </motion.div>
 
-                {/* Stats Section */}
+                {/* Stats */}
                 <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl mx-auto mb-16 md:mb-24"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto mb-20 md:mb-24 divide-y sm:divide-y-0 sm:divide-x divide-primary-200"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <StatItem end={testimonialsInfo.stats.totalClients} label="Clientes Satisfechos" />
+                    <StatItem end={testimonialsInfo.stats.totalClients} label="Clientes Felices" />
                     <StatItem end={testimonialsInfo.stats.rating} label="Valoración Promedio" />
-                    <StatItem end={testimonialsInfo.stats.satisfaction} label="Tasa de Satisfacción" />
+                    <StatItem end={testimonialsInfo.stats.satisfaction} label="Satisfacción" />
                 </motion.div>
 
-                {/* Trustmary Widget Container */}
+                {/* 3D Carousel Container */}
                 <div 
-                    className="relative max-w-5xl mx-auto min-h-[400px] flex items-center justify-center"
-                    aria-label="Widget de reseñas Trustmary actualizado para testimonios de clientes en bodas y quinceañeras"
+                    className="relative max-w-6xl mx-auto h-[500px] md:h-[450px] flex items-center justify-center mb-16"
+                    style={{ perspective: '1200px' }}
+                    onMouseEnter={() => setIsPaused(true)}
+                    onMouseLeave={() => setIsPaused(false)}
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
                 >
-                    {isWidgetLoading && (
-                        <div className="text-center transition-opacity duration-300">
-                            <div className="spinner mx-auto"></div>
-                            <p className="mt-4 text-warm-gray-500">Cargando testimonios...</p>
-                        </div>
-                    )}
-                    {widgetError && (
-                         <div className="text-center p-8 bg-warm-gray-50 border border-warm-gray-200 rounded-lg">
-                            <p className="font-medium text-warm-gray-800">No se pudieron cargar los testimonios.</p>
-                            <p className="text-sm text-warm-gray-500 mt-1">Por favor, intente refrescar la página más tarde.</p>
-                        </div>
-                    )}
-                    <div ref={widgetContainerRef} className="w-full" />
+                    {testimonials.map((testimonial, index) => {
+                        const position = getPosition(index);
+                        const isCenter = position === 'center';
+                        
+                        // Solo renderizamos si es visible o está animando
+                        if (position === 'hidden') return null;
+
+                        return (
+                            <motion.div
+                                key={testimonial.id}
+                                className="absolute w-full max-w-lg px-4 md:px-0"
+                                initial="hidden"
+                                animate={position}
+                                variants={variants}
+                                layout
+                            >
+                                <div className={`relative h-full transition-shadow duration-300 ${isCenter ? 'shadow-2xl' : 'shadow-lg'}`}>
+                                    <TestimonialCard 
+                                        testimonial={testimonial} 
+                                        isCenter={isCenter} 
+                                    />
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+
+                    {/* Controles laterales para desktop */}
+                    <button 
+                        onClick={goToPrevious}
+                        className="absolute left-0 md:left-4 z-30 p-3 rounded-full bg-white/80 hover:bg-white text-warm-gray-800 shadow-lg backdrop-blur-sm transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-accent hidden md:block"
+                        aria-label="Testimonio anterior"
+                    >
+                        <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button 
+                        onClick={goToNext}
+                        className="absolute right-0 md:right-4 z-30 p-3 rounded-full bg-white/80 hover:bg-white text-warm-gray-800 shadow-lg backdrop-blur-sm transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-accent hidden md:block"
+                        aria-label="Siguiente testimonio"
+                    >
+                        <ChevronRight className="w-6 h-6" />
+                    </button>
                 </div>
 
-                {/* CTA Section */}
+                {/* Indicadores (Dots) */}
+                <div className="flex justify-center gap-2 mb-16">
+                    {testimonials.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => {
+                                setCurrentIndex(index);
+                                setIsPaused(true);
+                            }}
+                            className={`h-2 rounded-full transition-all duration-300 ${
+                                index === currentIndex 
+                                    ? 'w-8 bg-accent' 
+                                    : 'w-2 bg-primary-200 hover:bg-primary-300'
+                            }`}
+                            aria-label={`Ir al testimonio ${index + 1}`}
+                        />
+                    ))}
+                </div>
+
+                {/* CTA */}
                 <motion.div 
-                    className="mt-24 text-center"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    className="text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold text-warm-gray-900 mb-2">{testimonialsInfo.cta.title}</h3>
-                    <p className="text-warm-gray-600 mb-6 max-w-lg mx-auto">{testimonialsInfo.cta.description}</p>
+                    <h3 className="text-2xl font-serif font-bold text-warm-gray-900 mb-3">{testimonialsInfo.cta.title}</h3>
+                    <p className="text-warm-gray-600 mb-8 max-w-md mx-auto">{testimonialsInfo.cta.description}</p>
                     <button
                         onClick={scrollToContact}
-                        className="btn-primary group text-base md:text-lg px-8 py-3"
-                        aria-label="Reservar tu fecha"
+                        className="btn-primary px-10 py-4 shadow-xl shadow-accent/20"
                     >
-                        <span>{testimonialsInfo.cta.buttonText}</span>
-                        <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                        {testimonialsInfo.cta.buttonText}
                     </button>
                 </motion.div>
             </div>
         </section>
     );
 }
-
-/*
- * =================================================================
- * Instrucciones de Integración
- * =================================================================
- *
- * 1. REEMPLAZO DEL COMPONENTE:
- *    - Este código reemplaza completamente el contenido de `components/Testimonials.tsx`.
- *    - El carrusel de testimonios manual ha sido sustituido por el widget dinámico de Trustmary con el nuevo ID.
- *
- * 2. PRUEBAS:
- *    - Reinicia tu servidor de desarrollo (`npm run dev`).
- *    - La sección "Testimonios" ahora debería mostrar el título, las estadísticas y luego el nuevo widget de Trustmary.
- *    - Utiliza las herramientas de desarrollador (F12) para probar el diseño responsive en vistas de móvil y escritorio.
- *    - El widget debe cargarse de forma centrada y ocupar el espacio de las antiguas cards.
- *
- * 3. TROUBLESHOOTING:
- *    - Si el widget no se carga, revisa la consola del navegador en busca de errores (CORS, 404, etc.).
- *    - El componente incluye un estado de carga y un mensaje de error como fallback para mejorar la experiencia del usuario si el script de Trustmary falla.
- *
- */
