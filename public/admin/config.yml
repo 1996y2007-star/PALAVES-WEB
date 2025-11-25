@@ -90,7 +90,8 @@ collections:
               - label: "Beneficios"
                 name: "benefits"
                 widget: "list"
-                field: {label: "Beneficio", name: "benefit", widget: "string"}
+                fields:  # Fix: "fields" para array de strings
+                  - {label: "Beneficio", name: "benefit", widget: "string"}
               - {label: "Texto del Botón CTA", name: "ctaText", widget: "string"}
 
   # ============================================
