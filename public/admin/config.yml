@@ -140,6 +140,39 @@ collections:
               - {label: "Título", name: "title", widget: "string"}
               - {label: "Descripción", name: "description", widget: "string"}
               - {label: "Texto del Botón", name: "buttonText", widget: "string"}
+
+  # ============================================
+  # TESTIMONIOS
+  # ============================================
+  - name: "testimonials"
+    label: "💬 Testimonios"
+    files:
+      - label: "Testimonios"
+        name: "testimonials"
+        file: "public/content/testimonials.json"
+        fields:
+          - {label: "Título", name: "title", widget: "string"}
+          - {label: "Subtítulo", name: "subtitle", widget: "string"}
+          - label: "Lista de Testimonios"
+            name: "testimonialsList"
+            widget: "list"
+            summary: "{{fields.name}}"
+            fields:
+              - {label: "ID", name: "id", widget: "number"}
+              - {label: "Nombre Cliente", name: "name", widget: "string"}
+              - {label: "Evento", name: "event", widget: "select", options: ["Boda", "15 Años"]}
+              - {label: "Fecha", name: "date", widget: "string"}
+              - {label: "Puntuación", name: "rating", widget: "number", default: 5, value_type: "int", min: 1, max: 5}
+              - {label: "Texto Reseña", name: "text", widget: "text"}
+              - {label: "Ubicación", name: "location", widget: "string"}
+              - label: "Foto Cliente"
+                name: "image"
+                widget: "object"
+                required: false
+                fields:
+                  - {label: "URL Imgur", name: "src", widget: "string"}
+                  - {label: "Blur Data (Opcional)", name: "blurDataURL", widget: "string"}
+
   # ============================================
   # CONTACTO
   # ============================================
