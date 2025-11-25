@@ -47,6 +47,6 @@
       style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
       img-src 'self' data: blob: https://i.imgur.com https://images.unsplash.com https://widget.trustmary.com; 
       font-src 'self' https://fonts.gstatic.com; 
-      connect-src 'self' https://identity.netlify.com https://api.hubspot.com https://forms.hubspot.com https://widget.trustmary.com; 
+      connect-src 'self' https://identity.netlify.com https://unpkg.com https://api.hubspot.com https://forms.hubspot.com https://widget.trustmary.com; 
       frame-src 'self' https://identity.netlify.com https://js-eu1.hsforms.net https://widget.trustmary.com;
     """
