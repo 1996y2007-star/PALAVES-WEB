@@ -3,28 +3,24 @@
   publish = "dist"
 
 # 1. CRITICO: Servir el archivo de configuración del CMS directamente
-# Esto soluciona el error "Failed to load config.yml" (404) que suele ocurrir en SPAs
 [[redirects]]
   from = "/admin/config.yml"
   to = "/admin/config.yml"
   status = 200
 
 # 2. CRITICO: Servir los archivos JSON de contenido directamente
-# Necesario para que el CMS y la App puedan leer los datos dinámicos
 [[redirects]]
   from = "/content/*"
   to = "/content/:splat"
   status = 200
 
 # 3. Redirección para el panel de administración (SPA del CMS)
-# Permite recargar la página dentro del admin sin error 404
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
 
 # 4. Fallback general para React Router (SPA principal)
-# Redirige cualquier otra ruta al index.html para que React maneje la navegación
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -38,9 +34,6 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    
-    # CSP permisiva para CMS, Hubspot, Trustmary e Imágenes externas
-    # Permite 'unsafe-eval' y 'unsafe-inline' necesarios para React y algunos widgets
     Content-Security-Policy = """
       default-src 'self'; 
       script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com https://cdn.tailwindcss.com https://js-eu1.hsforms.net https://widget.trustmary.com; 
