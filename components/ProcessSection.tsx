@@ -49,7 +49,7 @@ const BehindTheScenesImage: React.FC<{ image: ProcessBehindImage; index: number 
     return (
         <motion.div
             className="relative aspect-photo overflow-hidden rounded-lg shadow-lg group"
-            style={{ transformStyle: 'preserve-d' }}
+            style={{ transformStyle: 'preserve-3d' }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}

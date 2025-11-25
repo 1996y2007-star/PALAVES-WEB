@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { testimonials, testimonialsInfo, Testimonial } from '../lib/testimonialsData.ts';
 import { useAnimatedCounter } from '../hooks/useAnimatedCounter.ts';
@@ -81,7 +81,7 @@ export default function Testimonials() {
     };
 
     // Variantes de animación 3D
-    const variants = {
+    const variants: Variants = {
         center: {
             x: '0%',
             scale: 1,

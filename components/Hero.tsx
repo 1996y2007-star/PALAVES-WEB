@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { ChevronDown, MessageCircle } from './icons.tsx';
 import { useCMSContent } from '../hooks/useCMSContent.ts';
 import type { HeroData, SettingsData } from '../types/cms.ts';
@@ -46,7 +46,7 @@ const scrollToSection = (id: string) => {
 };
 
 // Reusable variants for animations
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -57,7 +57,7 @@ const containerVariants = {
   }
 };
 
-const childVariants = {
+const childVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100 } }
 };
