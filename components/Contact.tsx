@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Instagram, MapPin, MessageCircle, Send, Check } from './icons.tsx';
+import { Mail, Phone, MapPin, MessageCircle } from './icons.tsx';
 import InstagramMiniEmbed from './InstagramMiniEmbed.tsx';
 import { useCMSContent } from '../hooks/useCMSContent.ts';
 import type { ContactData, SettingsData } from '../types/cms.ts';
@@ -59,6 +59,19 @@ export default function Contact() {
 
   const instagramUrl = `https://www.instagram.com/${settings.instagram}`;
 
+  // Cargar el script de HubSpot dinámicamente
+  useEffect(() => {
+    const scriptId = 'hubspot-form-script';
+    // Verificar si el script ya existe
+    if (!document.getElementById(scriptId)) {
+        const script = document.createElement('script');
+        script.id = scriptId;
+        script.src = "https://js-eu1.hsforms.net/forms/embed/147327334.js";
+        script.defer = true;
+        document.body.appendChild(script);
+    }
+  }, []);
+
   return (
     <section id="contacto" className="section-padding bg-warm-gradient overflow-hidden">
       <div className="container-custom max-w-6xl">
@@ -75,78 +88,29 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           
-          {/* COLUMNA IZQUIERDA: Tarjeta Principal de Consulta */}
+          {/* COLUMNA IZQUIERDA: Formulario HubSpot Embebido */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6 }}
-            className="bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-warm-gray-100 flex flex-col justify-between h-full relative overflow-hidden group"
+            className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-warm-gray-100 h-full relative overflow-hidden group min-h-[500px]"
           >
             {/* Elemento decorativo sutil */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700 pointer-events-none"></div>
 
-            <div className="relative z-10">
-              <span className="inline-block py-1 px-3 rounded-full bg-primary-100 text-accent-dark text-xs font-bold tracking-wider uppercase mb-4">
-                Propuesta Personalizada
-              </span>
-              <h3 className="text-3xl md:text-4xl font-serif font-semibold text-warm-gray-900 mb-6 leading-tight">
-                ¡Hablemos de tu<br/>Evento Especial!
+            <div className="relative z-10 w-full h-full">
+               <h3 className="text-2xl font-serif font-semibold text-warm-gray-900 mb-6 text-center">
+                ¡Hablemos de tu Evento!
               </h3>
               
-              <p className="text-lg text-warm-gray-600 mb-8 leading-relaxed">
-                Para brindarte la mejor atención, por favor completa el formulario de consulta. Me pondré en contacto contigo a la brevedad con una propuesta a tu medida.
-              </p>
-
-              <a 
-                href="https://share-eu1.hsforms.com/2jnSzFY4fSwWVHT21sRQKhA2fpqhy"
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="btn-primary w-full text-lg py-4 shadow-lg shadow-accent/20 group flex items-center justify-center gap-3 transform transition-transform hover:-translate-y-1"
-              >
-                <span>Envíame tu consulta</span>
-                <Send className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </a>
-            </div>
-
-            {/* Separador */}
-            <div className="w-full h-px bg-warm-gray-100 my-8"></div>
-
-            {/* Value Proposition */}
-            <div className="relative z-10">
-               <h4 className="font-serif font-bold text-warm-gray-800 mb-4 text-sm uppercase tracking-wide flex items-center gap-2">
-                <span className="w-8 h-px bg-accent"></span>
-                ¿Por qué elegirnos?
-              </h4>
-              <ul className="space-y-4">
-                <li className="flex gap-4 items-start">
-                  <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center">
-                    <Check className="w-3.5 h-3.5 text-green-600" />
-                  </div>
-                  <div>
-                    <strong className="block text-warm-gray-900 text-sm font-semibold">Conexión Personal</strong>
-                    <p className="text-sm text-warm-gray-600 leading-snug">Entendemos tu visión y a la persona detrás de la historia.</p>
-                  </div>
-                </li>
-                <li className="flex gap-4 items-start">
-                  <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center">
-                    <Check className="w-3.5 h-3.5 text-green-600" />
-                  </div>
-                  <div>
-                    <strong className="block text-warm-gray-900 text-sm font-semibold">Calidad Atemporal</strong>
-                    <p className="text-sm text-warm-gray-600 leading-snug">Estilo cálido y elegante que inspira confianza.</p>
-                  </div>
-                </li>
-                <li className="flex gap-4 items-start">
-                  <div className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center">
-                    <Check className="w-3.5 h-3.5 text-green-600" />
-                  </div>
-                  <div>
-                    <strong className="block text-warm-gray-900 text-sm font-semibold">Atención Impecable</strong>
-                    <p className="text-sm text-warm-gray-600 leading-snug">Puntualidad y orden para que disfrutes sin estrés.</p>
-                  </div>
-                </li>
-              </ul>
+              {/* Contenedor del Formulario HubSpot */}
+              <div 
+                className="hs-form-frame w-full" 
+                data-region="eu1" 
+                data-form-id="8e74b315-8e1f-4b05-951d-3db5b1140a84" 
+                data-portal-id="147327334"
+              ></div>
             </div>
           </motion.div>
 
