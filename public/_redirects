@@ -1,0 +1,12 @@
+# Forzar carga estática del archivo de configuración del CMS
+# Esto evita que Netlify sirva index.html en lugar del YAML
+/admin/config.yml  /admin/config.yml  200
+
+# Forzar carga estática de los archivos JSON de contenido
+/content/*  /content/:splat  200
+
+# Redirección para la aplicación del CMS (SPA interna)
+/admin/*  /admin/index.html  200
+
+# Fallback para la aplicación React (Single Page Application)
+/*  /index.html  200
