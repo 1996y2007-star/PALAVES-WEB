@@ -3,7 +3,7 @@
   publish = "dist"
 
 # 1. CRITICO: Servir el archivo de configuración del CMS directamente
-# Esto soluciona el error "Failed to load config.yml" (404) que suele ocurrir en SPAs
+# Esto soluciona el error "YAMLSyntaxError" (que ocurre cuando se sirve HTML en lugar de YAML)
 [[redirects]]
   from = "/admin/config.yml"
   to = "/admin/config.yml"
