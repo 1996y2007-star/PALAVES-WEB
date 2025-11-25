@@ -2,8 +2,10 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+# Carpeta donde se subirán las imágenes nuevas desde el CMS
+media_folder: "public/images/uploads"
+# Ruta pública con la que se accederá a esas imágenes en la web
+public_folder: "/images/uploads"
 
 locale: es
 
@@ -16,7 +18,7 @@ collections:
     files:
       - label: "Ajustes del Sitio"
         name: "settings"
-        file: "content/settings.json"
+        file: "public/content/settings.json"
         fields:
           - {label: "Nombre del Fotógrafo", name: "photographerName", widget: "string", default: "Santiago Palavés"}
           - {label: "Teléfono WhatsApp", name: "phone", widget: "string", hint: "+598 XX XXX XXX"}
@@ -32,7 +34,7 @@ collections:
     files:
       - label: "Hero"
         name: "hero"
-        file: "content/hero.json"
+        file: "public/content/hero.json"
         fields:
           - {label: "Título Principal", name: "title", widget: "string"}
           - {label: "Subtítulo", name: "subtitle", widget: "string"}
@@ -53,7 +55,7 @@ collections:
     files:
       - label: "Sobre Mí"
         name: "about"
-        file: "content/about.json"
+        file: "public/content/about.json"
         fields:
           - {label: "Título", name: "title", widget: "string", default: "Sobre Mí"}
           - {label: "Descripción Principal", name: "description", widget: "markdown"}
@@ -68,7 +70,7 @@ collections:
     files:
       - label: "Servicios"
         name: "services"
-        file: "content/services.json"
+        file: "public/content/services.json"
         fields:
           - {label: "Título de la Sección", name: "title", widget: "string"}
           - {label: "Subtítulo", name: "subtitle", widget: "text"}
@@ -90,8 +92,7 @@ collections:
               - label: "Beneficios"
                 name: "benefits"
                 widget: "list"
-                fields:  # Fix: "fields" para array de strings
-                  - {label: "Beneficio", name: "benefit", widget: "string"}
+                field: {label: "Beneficio", name: "benefit", widget: "string"}
               - {label: "Texto del Botón CTA", name: "ctaText", widget: "string"}
 
   # ============================================
@@ -102,7 +103,7 @@ collections:
     files:
       - label: "Proceso"
         name: "process"
-        file: "content/process.json"
+        file: "public/content/process.json"
         fields:
           - {label: "Título de la Sección", name: "title", widget: "string"}
           - {label: "Subtítulo", name: "subtitle", widget: "text", required: false}
@@ -150,7 +151,7 @@ collections:
     files:
       - label: "Testimonios"
         name: "testimonials"
-        file: "content/testimonials.json"
+        file: "public/content/testimonials.json"
         fields:
           - {label: "Título", name: "title", widget: "string"}
           - {label: "Subtítulo", name: "subtitle", widget: "string"}
@@ -182,7 +183,7 @@ collections:
     files:
       - label: "Información de Contacto"
         name: "contact"
-        file: "content/contact.json"
+        file: "public/content/contact.json"
         fields:
           - {label: "Título de la Sección", name: "title", widget: "string"}
           - {label: "Descripción", name: "description", widget: "text"}
@@ -198,7 +199,7 @@ collections:
     files:
       - label: "Fotos de Bodas"
         name: "bodas"
-        file: "content/portfolio/bodas.json"
+        file: "public/content/portfolio/bodas.json"
         fields:
           - {label: "Título de la Sección", name: "title", widget: "string", default: "Bodas"}
           - label: "📸 Galería de Fotos"
@@ -221,7 +222,7 @@ collections:
     files:
       - label: "Fotos de 15 Años"
         name: "quince"
-        file: "content/portfolio/quince.json"
+        file: "public/content/portfolio/quince.json"
         fields:
           - {label: "Título de la Sección", name: "title", widget: "string", default: "15 Años"}
           - label: "📸 Galería de Fotos"
