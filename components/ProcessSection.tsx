@@ -4,7 +4,7 @@ import { Clock, ArrowRight, MessageCircle, Users, Camera, Sparkles } from 'lucid
 import { useScrollProgress } from '../hooks/useScrollProgress.ts';
 import { useAnimatedCounter } from '../hooks/useAnimatedCounter.ts';
 import { useCMSContent } from '../hooks/useCMSContent.ts';
-import type { ProcessData, ProcessStep as ProcessStepType, ProcessBehindImage } from '../types/cms.ts';
+import type { ProcessData, ProcessStep as ProcessStepType } from '../types/cms.ts';
 // Import original data for fallback and styling
 import { processInfo as fallbackProcessInfo, processSteps as fallbackSteps } from '../lib/processData.ts';
 
@@ -15,13 +15,7 @@ const iconMap = {
   Sparkles,
 };
 
-// Augment step with color from original data for styling
-interface ProcessStepProps {
-  step: ProcessStepType & { color: string };
-  isActive: boolean;
-}
-
-const ProcessStep: React.FC<ProcessStepProps> = ({ step, isActive }) => {
+const ProcessStep = ({ step, isActive }: { step: ProcessStepType & { color: string }; isActive: boolean }) => {
   const Icon = iconMap[step.icon];
   return (
     <motion.div 
@@ -45,33 +39,6 @@ const ProcessStep: React.FC<ProcessStepProps> = ({ step, isActive }) => {
   );
 };
 
-const BehindTheScenesImage: React.FC<{ image: ProcessBehindImage; index: number }> = ({ image, index }) => {
-    return (
-        <motion.div
-            className="relative aspect-photo overflow-hidden rounded-lg shadow-lg group"
-            style={{ transformStyle: 'preserve-3d' }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            whileHover={{ scale: 1.05 }}
-        >
-            <motion.img
-                src={image.src}
-                alt={image.alt}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-                style={{ transform: 'translateZ(20px) scale(1.05)' }}
-            />
-            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
-            <p className="absolute bottom-4 left-4 text-white font-medium text-sm md:text-base opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{ textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>
-                {image.alt}
-            </p>
-        </motion.div>
-    );
-};
-
 // Create fallback data from imported lib
 const fallbackData: ProcessData = {
     title: fallbackProcessInfo.title,
@@ -80,7 +47,8 @@ const fallbackData: ProcessData = {
     timeline: fallbackProcessInfo.timeline,
     behindTheScenes: {
         ...fallbackProcessInfo.behindTheScenes,
-        images: fallbackProcessInfo.behindTheScenes.images.map(({blurDataURL, ...rest}) => rest),
+        images: [],
+        enabled: false
     },
     cta: fallbackProcessInfo.cta,
 };
@@ -141,41 +109,22 @@ export default function ProcessSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 items-center mb-24 lg:mb-32">
-          <motion.div 
-            className="lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <Clock className="w-12 h-12 text-accent-dark" />
-              <div className="font-serif font-bold text-warm-gray-900">
-                <span ref={counterRef} className="text-6xl">{processInfo.timeline.duration.includes('-') ? `${durationParts[0]}-${count}` : count}</span>
-              </div>
+        {/* Centered Timeline Clock */}
+        <motion.div 
+          className="flex flex-col items-center text-center mb-24 lg:mb-32"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <Clock className="w-12 h-12 text-accent-dark" />
+            <div className="font-serif font-bold text-warm-gray-900">
+              <span ref={counterRef} className="text-6xl">{processInfo.timeline.duration.includes('-') ? `${durationParts[0]}-${count}` : count}</span>
             </div>
-            <p className="text-lg text-warm-gray-600">{processInfo.timeline.label}</p>
-          </motion.div>
-
-          {processInfo.behindTheScenes.enabled && (
-            <motion.div 
-              className="lg:col-span-2"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7 }}
-            >
-              <h3 className="text-3xl font-serif font-semibold text-warm-gray-900 mb-2 text-center lg:text-left">{processInfo.behindTheScenes.title}</h3>
-              <p className="text-warm-gray-600 mb-8 text-center lg:text-left">{processInfo.behindTheScenes.description}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {processInfo.behindTheScenes.images.map((img, i) => (
-                  <BehindTheScenesImage key={i} image={img} index={i} />
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </div>
+          </div>
+          <p className="text-lg text-warm-gray-600">{processInfo.timeline.label}</p>
+        </motion.div>
 
         <motion.div 
           className="bg-primary-500/10 border border-primary-200 rounded-xl p-8 md:p-12 text-center"

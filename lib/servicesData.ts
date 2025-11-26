@@ -47,7 +47,7 @@ export const servicesData: Service[] = [
 ];
 
 export const servicesInfo = {
-  title: 'Mis Servicios',
+  title: 'Servicios',
   subtitle: 'Descubre cómo puedo capturar tu historia con un enfoque profesional y personalizado, creando recuerdos que durarán para siempre.',
   footerNote: '*Paquetes totalmente personalizables. Contáctame para crear una propuesta a tu medida.'
 };

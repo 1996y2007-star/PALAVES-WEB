@@ -62,11 +62,12 @@ export default function Contact() {
   // Cargar el script de HubSpot dinámicamente
   useEffect(() => {
     const scriptId = 'hubspot-form-script';
-    // Verificar si el script ya existe
+    // Verificar si el script ya existe para evitar duplicados
     if (!document.getElementById(scriptId)) {
         const script = document.createElement('script');
         script.id = scriptId;
-        script.src = "https://js-eu1.hsforms.net/forms/embed/147327334.js";
+        // Actualizado al nuevo ID de script proporcionado
+        script.src = "https://js-eu1.hsforms.net/forms/embed/147334035.js";
         script.defer = true;
         document.body.appendChild(script);
     }
@@ -104,12 +105,12 @@ export default function Contact() {
                 ¡Hablemos de tu Evento!
               </h3>
               
-              {/* Contenedor del Formulario HubSpot */}
+              {/* Contenedor del Formulario HubSpot actualizado */}
               <div 
                 className="hs-form-frame w-full" 
                 data-region="eu1" 
-                data-form-id="8e74b315-8e1f-4b05-951d-3db5b1140a84" 
-                data-portal-id="147327334"
+                data-form-id="83a16ea6-0973-4b88-98f8-980920aaeb77" 
+                data-portal-id="147334035"
               ></div>
             </div>
           </motion.div>
