@@ -9,14 +9,14 @@ import type { ContactData, SettingsData } from '../types/cms.ts';
 const fallbackContactData: ContactData = {
     title: "Hablemos de tu evento",
     description: "El primer paso para tener los recuerdos más lindos de tu día especial. Escribime y coordinamos una reunión.",
-    email: "santi@ejemplo.com",
-    phone: "(+598) 99 123 456",
-    whatsapp: "59899123456"
+    email: "contacto@santiagopalavesfotografia.com",
+    phone: "+598 98 760 160",
+    whatsapp: "59898760160"
 };
 const fallbackSettingsData: SettingsData = {
     photographerName: "Santiago Palavés",
-    phone: "+598 99 123 456",
-    email: "santi@ejemplo.com",
+    phone: "+598 98 760 160",
+    email: "contacto@santiagopalavesfotografia.com",
     instagram: "santipalavesfotografia",
     location: "Montevideo, Uruguay"
 };

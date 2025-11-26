@@ -7,8 +7,8 @@ import type { SettingsData } from '../types/cms.ts';
 
 const fallbackSettings: SettingsData = {
   photographerName: 'Santiago Palavés',
-  phone: '',
-  email: '',
+  phone: '+598 98 760 160',
+  email: 'contacto@santiagopalavesfotografia.com',
   instagram: 'santipalavesfotografia',
   location: '',
 };

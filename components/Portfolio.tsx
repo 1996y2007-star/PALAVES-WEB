@@ -11,8 +11,10 @@ const fallbackWeddings: PortfolioData = { title: "Bodas", photos: weddingPhotos 
 const fallbackQuince: PortfolioData = { title: "15 Años", photos: quinceaneraPhotos };
 const fallbackSettings: SettingsData = { 
   photographerName: "Santiago Palavés", 
-  phone: "59899123456", 
-  email: "", instagram: "", location: "" 
+  phone: "59898760160", 
+  email: "contacto@santiagopalavesfotografia.com", 
+  instagram: "", 
+  location: "" 
 };
 
 export default function Portfolio() {

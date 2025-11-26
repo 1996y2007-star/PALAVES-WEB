@@ -4,7 +4,7 @@ import { WhatsApp } from './icons.tsx';
 
 const FloatingWhatsApp = () => {
   const handleWhatsAppClick = () => {
-    const phoneNumber = '59899123456'; // Ensure this is the correct number
+    const phoneNumber = '59898760160'; // Ensure this is the correct number
     const message = encodeURIComponent('Hola Santiago! Quisiera hacer una consulta sobre tus servicios.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank', 'noopener,noreferrer');
   };

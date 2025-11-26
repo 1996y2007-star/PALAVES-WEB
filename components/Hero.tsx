@@ -24,8 +24,8 @@ const fallbackHeroData: HeroData = {
 
 const fallbackSettingsData: SettingsData = {
   photographerName: "Santiago Palavés",
-  phone: "59899123456",
-  email: "",
+  phone: "59898760160",
+  email: "contacto@santiagopalavesfotografia.com",
   instagram: "",
   location: ""
 };
